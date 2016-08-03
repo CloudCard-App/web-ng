@@ -2,10 +2,33 @@
 <html>
 <head>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <div class="well">
-        <div style="text-align: center;">
-            <h1>Student Dashboard</h1>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <h1><i class="fa fa-mortar-board"></i> Dashboard</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h3>Profile</h3>
+                <p>
+                    <strong>Name:</strong> <%= user.google.name %><br>
+                    <strong>Email:</strong> <%= user.google.email %><br>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="well">
+                <h3>Your Classes</h3>
+            </div>
         </div>
     </div>
-</head>
+</div>
+</body>
+
 </html>

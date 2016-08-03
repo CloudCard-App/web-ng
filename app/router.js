@@ -1,4 +1,4 @@
-module.exports = function(passport, app) {
+module.exports = function (passport, app) {
   app.get('/', function (req, res) {
     res.render('index');
   });
@@ -18,29 +18,17 @@ module.exports = function(passport, app) {
   }));
 
   app.get('/teacher/dashboard', isLoggedIn, (req, res) => {
-    res.render('teacher/dashboard');
+    res.render('teacher/dashboard', {user: req.user});
   });
 
   app.get('/student/dashboard', isLoggedIn, (req, res) => {
-    res.render('student/dashboard');
+    res.render('student/dashboard', {user: req.user});
   });
 
-/*
-  app.get('/auth/whoareyou', (req, res) => {
-    res.render('whoareyou');
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
   });
-
-  app.post('auth/google/teacherLogin');
-
-  app.get('/auth/google/callback/student', passport.authenticate('google', {
-    successRedirect: '/student/profile',
-    failureRedirect: '/'
-  }));
-
-  app.get('/teacher/profile', function (req, res) {
-    res.render('teacher/profile');
-  });
-*/
 };
 
 function isLoggedIn(req, res, next) {
