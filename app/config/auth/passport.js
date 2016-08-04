@@ -16,7 +16,7 @@ module.exports = function (passport) {
   passport.deserializeUser(function (id, done) {
     console.log('deserializing user!');
     request('http://localhost:8080/student/info/?id=' + id, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode == 200 && body) {
         console.log('deserialized student: ' + body);
         done(null, JSON.parse(body));
       } else {

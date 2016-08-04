@@ -1,3 +1,5 @@
+let teacher = require('./models/teacher');
+
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
     res.render('index');
@@ -18,7 +20,9 @@ module.exports = function (passport, app) {
   }));
 
   app.get('/teacher/dashboard', isLoggedIn, (req, res) => {
-    res.render('teacher/dashboard', {user: req.user});
+    teacher.getClassList(req.user._id).then((classes) => {
+      res.render('teacher/dashboard', {'user.info': req.user, 'user.classes': classes});
+    });
   });
 
   app.get('/student/dashboard', isLoggedIn, (req, res) => {
