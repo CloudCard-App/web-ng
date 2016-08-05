@@ -10,5 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="web-ng node_modules" level="project" />
     <orderEntry type="library" name="67bd4bb529" level="application" />
+    <orderEntry type="library" name="jquery-1.11.0" level="application" />
+    <orderEntry type="library" name="jquery-migrate-1.2.1" level="application" />
   </component>
 </module>

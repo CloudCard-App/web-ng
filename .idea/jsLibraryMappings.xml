@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{web-ng node_modules}" />
-    <file url="PROJECT" libraries="{67bd4bb529}" />
+    <file url="PROJECT" libraries="{67bd4bb529, jquery-1.11.0, jquery-migrate-1.2.1}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>

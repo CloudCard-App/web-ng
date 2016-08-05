@@ -1,54 +1,52 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <div class="well">
-        <div style="text-align: center;">
-            <h1>Teacher Dashboard</h1>
-        </div>
-    </div>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="well">
-        <div style="text-align: center;">
-            <h1>Teacher Dashboard</h1>
+    <div class="page-header text-center">
+        <h1>Teacher Dashboard</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="well">
+
+                <h3>Your Classes</h3>
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Password</th>
+                    </tr>
+
+                    <% for (let i = 0; i < user.classes.length; i++) { %>
+                    <tr>
+                        <% let infourl = "/teacher/class/?id=" + JSON.stringify(user.classes[i]._id) %>
+                        <td><a href=<%= infourl %>> <%= user.classes[i].name %> </a> </td>
+                        <td><%= user.classes[i].password %></td>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="well">
+                <h3>New Class</h3>
+                <form action="/teacher/createClass" method="post">
+                    <input type="text" class="form-control" name="name" placeholder="Name">
+                    <input type="text" class="form-control" name="password" placeholder="Password">
+                    <br>
+                    <button class="btn btn-primary btn-default" type="submit">Create</button>
+                </form>
+            </div>
         </div>
     </div>
-
-    <div class="well">
-        <h3 class="red">Your Decks</h3>
-        <table class="table" cellpadding="15">
-            <tr>
-                <th>Access Code</th>
-                <th>Deck Name</th>
-                <th>Action</th>
-            </tr>
-
-            <% for (var i = 0; i < user.classes.length; i++) { %>
-            <tr>
-                <td><%= user.classes[i].name %></td>
-                <td><%= user.classes[i].password %></td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            ...
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="<%= link %>">Edit Deck</a></li>
-                            <li><a href="../studentStats/<%= user.classes[i].id %>">View Statistics</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Delete Deck</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <% } %>
-        </table>
-    </div>
-
 </div>
 </body>
 </html>
