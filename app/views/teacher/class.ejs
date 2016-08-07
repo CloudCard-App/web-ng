@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../public/style.css">
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
 <div class="container">
@@ -58,7 +58,7 @@
           <% deckList.forEach(function(deck) { %>
           <% console.log('deck = ' + JSON.stringify(deck)); %>
           <tr>
-            <td><%= deck.name %></td>
+            <td><a href=<%= '/teacher/deck/deck/?deckID=' + deck._id %> ><%= deck.name %></a></td>
             <td><%= deck.description %></td>
             <td>
               <div class="dropdown">

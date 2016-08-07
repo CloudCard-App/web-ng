@@ -1,5 +1,6 @@
 let teacherModel = require('./models/teacher/teacher');
 let classModel = require('./models/teacher/class');
+let deckModel = require('./models/teacher/deck');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -66,6 +67,17 @@ module.exports = function (passport, app) {
       res.redirect('/teacher/class/class/?id=' + req.query.classID);
     }).catch((error) => {
       console.log('error! ' + error);
+    });
+  });
+
+
+  app.get('/teacher/deck/deck/*', isLoggedIn, (req, res) => {
+    let deckFind = deckModel.getInfo(req.query.deckID);
+    Promise.all([deckFind]).then((results) => {
+      let deckInfo = results[0];
+      res.render('teacher/deck', {
+        deckInfo: deckInfo
+      });
     });
   });
 
