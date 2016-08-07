@@ -38,7 +38,7 @@ module.exports = function (passport, app) {
     });
   });
 
-  app.get('/teacher/class/*', isLoggedIn, (req, res) => {
+  app.get('/teacher/class/class/*', isLoggedIn, (req, res) => {
     let classID = req.query.id;
     console.log('classID = ' + classID);
     let classInfo = classModel.getInfo(classID);
@@ -63,7 +63,18 @@ module.exports = function (passport, app) {
 
   app.post('/teacher/class/createDeck', isLoggedIn, (req, res) => {
     classModel.createDeck(req.query.classID, req.body.name, req.body.description).then(() => {
-      res.redirect('/teacher/class/?id=' + req.query.classID);
+      res.redirect('/teacher/class/class/?id=' + req.query.classID);
+    }).catch((error) => {
+      console.log('error! ' + error);
+    });
+  });
+
+  app.get('/teacher/class/deleteDeck/*', isLoggedIn, (req, res) => {
+    console.log('deleting deck: deckID = ' + req.query.deckID);
+    console.log('deleting deck: classID = ' + req.query.classID);
+
+    classModel.deleteDeck(req.query.deckID).then(() => {
+      res.redirect('/teacher/class/class/?id=' + req.query.classID);
     });
   });
 

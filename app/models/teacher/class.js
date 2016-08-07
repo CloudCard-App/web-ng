@@ -1,4 +1,3 @@
-let request = require('request');
 let requester = require('../requester');
 
 module.exports.getDecks = function (classID) {
@@ -6,8 +5,9 @@ module.exports.getDecks = function (classID) {
   return requester.get(url);
 };
 
-module.exports.getInfo = function (deckID) {
-  let url = '/class/info/?classID=' + deckID.replace(/^"(.*)"$/, '$1'); // please
+module.exports.getInfo = function (classID) {
+  console.log('classID = ' + classID);
+  let url = '/class/info/?classID=' + classID.replace(/^"(.*)"$/, '$1'); // please
   return requester.get(url);
 };
 
@@ -21,4 +21,15 @@ module.exports.createDeck = function (classID, deckName, deckDescription) {
     }
   };
   return requester.post(url, body);
+};
+
+module.exports.deleteDeck = function (deckID) {
+  console.log('deleting deckID = ' + deckID);
+  let url = '/deck/delete';
+  let body = {
+    form: {
+      deckID: deckID
+    }
+  };
+  return requester.delete(url, body);
 };

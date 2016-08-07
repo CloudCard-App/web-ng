@@ -26,7 +26,7 @@
 
           <% for (let i = 0; i < user.classes.length; i++) { %>
           <tr>
-            <% let infourl = "/teacher/class/?id=" + JSON.stringify(user.classes[i]._id) %>
+            <% let infourl = "/teacher/class/class/?id=" + JSON.stringify(user.classes[i]._id) %>
             <td><a href=<%= infourl %>> <%= user.classes[i].name %> </a></td>
             <td><%= user.classes[i].password %></td>
           </tr>
