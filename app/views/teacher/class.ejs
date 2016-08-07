@@ -11,7 +11,7 @@
 <body>
 <div class="container">
   <div class="page-header text-center">
-    <h1><%= className %></h1>
+    <h1><%= classInfo.name %></h1>
   </div>
 
   <ul class="nav nav-tabs nav-justified">
@@ -22,13 +22,17 @@
   <div class="tab-content">
     <div id="deckList" class="tab-pane fade in active">
       <div class="panel panel-default">
-        <div class="panel-heading"><h3> Your Decks </h3></div>
+        <div class="panel-heading">
+          <h3 class="panel-title pull-left"> Your Decks </h3>
+          <button type="button" class="btn btn-primary pull-right">New Deck</button>
+          <div class="clearfix"></div>
+        </div>
         <table class="table">
           <tr>
             <th>Name</th>
             <th>Action</th>
           </tr>
-          <% decks.forEach(function(deck) { %>
+          <% deckList.forEach(function(deck) { %>
           <% console.log('deck = ' + JSON.stringify(deck)); %>
           <tr>
             <td><%= deck.name %></td>

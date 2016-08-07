@@ -3,6 +3,7 @@ global.__base = __dirname + '/';
 // set up =====================================================================
 // get all the tools we need
 var express = require('express');
+require('dotenv').config();
 var app = express(); //Create our app, using our new superpowers
 
 app.set('views', __base + 'views/');

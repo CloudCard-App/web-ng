@@ -7,7 +7,7 @@ module.exports.getDecks = function (classID) {
 };
 
 module.exports.getInfo = function (deckID) {
-  let url = '/deck/info/?deckID=' + deckID.replace(/^"(.*)"$/, '$1'); // please
+  let url = '/class/info/?classID=' + deckID.replace(/^"(.*)"$/, '$1'); // please
   return requester.get(url);
 };
 

@@ -1,4 +1,5 @@
-let teacher = require('./models/teacher');
+let teacherModel = require('./models/teacher/teacher');
+let classModel = require('./models/teacher/class');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -20,8 +21,7 @@ module.exports = function (passport, app) {
   }));
 
   app.get('/teacher/dashboard', isLoggedIn, (req, res) => {
-    teacher.getClassList(req.user._id).then((classes) => {
-      console.log('rendering classes: ' + classes);
+    teacherModel.getClassList(req.user._id).then((classes) => {
       res.render('teacher/dashboard', {
         'user': {
           'info': req.user,
@@ -32,7 +32,7 @@ module.exports = function (passport, app) {
   });
 
   app.post('/teacher/createClass', isLoggedIn, (req, res) => {
-    teacher.createClass(req.user._id, req.body.name, req.body.password).then((newClass) => {
+    teacherModel.createClass(req.user._id, req.body.name, req.body.password).then((newClass) => {
       res.redirect('/teacher/dashboard');
     }).catch((error) => {
     });
@@ -40,17 +40,24 @@ module.exports = function (passport, app) {
 
   app.get('/teacher/class/*', isLoggedIn, (req, res) => {
     let classID = req.query.id;
-    console.log('classid = ' + classID);
-    res.render('teacher/class', {
-      className: 'Test Class', decks: [
-        {name: 'Deck 1'},
-        {name: 'Deck 2'},
-        {name: 'Deck 3'},
-        {name: 'Deck 4'},
-        {name: 'Deck 5'},
-        {name: 'Deck 6'},
-        {name: 'Deck 7'}
-      ]
+    console.log('classID = ' + classID);
+    let classInfo = classModel.getInfo(classID);
+    let deckList = classModel.getDecks(classID);
+
+    Promise.all([classInfo, deckList]).then((results) => {
+      console.log('done! ' + results);
+      let classInfo = results[0];
+      let deckList = results[1];
+
+      console.log('classInfo = ' + JSON.stringify(classInfo));
+      console.log('deckList = ' + JSON.stringify(deckList));
+
+      res.render('teacher/class', {
+        classInfo: classInfo,
+        deckList: deckList
+      });
+    }).catch((error) => {
+      console.error('argh! :( ' + error);
     });
   });
 
