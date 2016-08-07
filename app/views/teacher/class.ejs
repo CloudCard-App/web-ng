@@ -1,45 +1,62 @@
 <!doctype html>
 <html>
 <head>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../public/style.css">
 </head>
 <body>
 <div class="container">
-    <div class="page-header text-center">
-        <h1><%= className %></h1>
+  <div class="page-header text-center">
+    <h1><%= className %></h1>
+  </div>
+
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" class="active"><a data-toggle="tab" href="#deckList">Decks</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#studentList">Students</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="deckList" class="tab-pane fade in active">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3> Your Decks </h3></div>
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+          <% decks.forEach(function(deck) { %>
+          <% console.log('deck = ' + JSON.stringify(deck)); %>
+          <tr>
+            <td><%= deck.name %></td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  ...
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#edit' %>>Edit</a></li>
+                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#students' %>>Students</a></li>
+                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#stats' %>>Statistics</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href=<%= '/teacher/deleteDeck/?id=' + deck._id %>>Delete</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+      </div>
     </div>
-
-    <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" class="active"><a data-toggle="tab" href="#deckList">Decks</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#studentList">Students</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="deckList" class="tab-pane fade in active">
-            <h3>Decks</h3>
-            <ul class="nav nav-tabs nav-justified">
-                <% for (let i = 0; i < decks.length; i++) { %>
-                <% let href = '#' + decks[i].name %>
-                <li role="presentation"><a data-toggle="tab" href=<%= href %>><%= decks[i].name %></a></li>
-                <% } %>
-            </ul>
-
-            <div class="tab-content">
-                <% for (let i = 0; i < decks.length; i++) { %>
-                <div id=<%= decks[i].name %> class="tab-pane fade">
-                    <h3><%= decks[i].name %></h3>
-                    <p>cards</p>
-                </div>
-                <% } %>
-            </div>
-        </div>
-        <div id="studentList" class="tab-pane fade">
-            <h3>Students</h3>
-        </div>
+    <div id="studentList" class="tab-pane fade">
+      <h3>Students</h3>
     </div>
+  </div>
 </div>
 </body>
 </html>
