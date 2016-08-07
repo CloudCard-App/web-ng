@@ -11,3 +11,14 @@ module.exports.getInfo = function (deckID) {
   return requester.get(url);
 };
 
+module.exports.createDeck = function (classID, deckName, deckDescription) {
+  let url = '/deck/create';
+  let body = {
+    form: {
+      classID: classID,
+      name: deckName,
+      description: deckDescription
+    }
+  };
+  return requester.post(url, body);
+};

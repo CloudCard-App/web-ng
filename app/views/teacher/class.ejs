@@ -24,18 +24,42 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title pull-left"> Your Decks </h3>
-          <button type="button" class="btn btn-primary pull-right">New Deck</button>
+          <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newDeck">New Deck</button>
           <div class="clearfix"></div>
+
+          <div id="newDeck" class="modal fade" role="form">
+            <div class="modal-dialog">
+
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">New Deck</h4>
+                </div>
+                <div class="modal-body">
+                  <form action="/teacher/class/createDeck/?classID=<%= classInfo._id %>" method="post">
+                    <input type="text" class="form-control" name="name" placeholder="Name">
+                    <input type="text" class="form-control" name="description" placeholder="Description">
+                    <br>
+                    <button class="btn btn-primary" type="submit">Create</button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
         <table class="table">
           <tr>
             <th>Name</th>
+            <th>Description</th>
             <th>Action</th>
           </tr>
           <% deckList.forEach(function(deck) { %>
           <% console.log('deck = ' + JSON.stringify(deck)); %>
           <tr>
             <td><%= deck.name %></td>
+            <td><%= deck.description %></td>
             <td>
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"

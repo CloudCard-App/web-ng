@@ -61,6 +61,12 @@ module.exports = function (passport, app) {
     });
   });
 
+  app.post('/teacher/class/createDeck', isLoggedIn, (req, res) => {
+    classModel.createDeck(req.query.classID, req.body.name, req.body.description).then(() => {
+      res.redirect('/teacher/class/?id=' + req.query.classID);
+    });
+  });
+
   app.get('/student/dashboard', isLoggedIn, (req, res) => {
     res.render('student/dashboard', {user: req.user});
   });
