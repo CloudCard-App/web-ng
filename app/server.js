@@ -6,7 +6,7 @@ var express = require('express');
 var app = express(); //Create our app, using our new superpowers
 
 app.set('views', __base + 'views/');
-app.use(express.static(__base + 'public'));
+app.use('/public', express.static(__base + 'public'));
 
 var passport = require('passport');
 var flash = require('connect-flash'); //Flash messages in session
