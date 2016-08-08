@@ -41,7 +41,6 @@ module.exports = function (passport, app) {
 
   app.get('/teacher/class/class/*', isLoggedIn, (req, res) => {
     let classID = req.query.id;
-    console.log('classID = ' + classID);
     let classInfo = classModel.getInfo(classID);
     let deckList = classModel.getDecks(classID);
 
@@ -49,9 +48,6 @@ module.exports = function (passport, app) {
       console.log('done! ' + results);
       let classInfo = results[0];
       let deckList = results[1];
-
-      console.log('classInfo = ' + JSON.stringify(classInfo));
-      console.log('deckList = ' + JSON.stringify(deckList));
 
       res.render('teacher/class', {
         classInfo: classInfo,
@@ -70,16 +66,53 @@ module.exports = function (passport, app) {
     });
   });
 
+  app.post('/teacher/card/create/*', isLoggedIn, (req, res) => {
+    deckModel.createCard(req.query.deckID, req.body.front, req.body.back, req.body.datatype).then(() => {
+      console.log('created card deckID = ' + req.query.deckID);
+      res.redirect('/teacher/deck/deck/?deckID=' + req.query.deckID);
+      console.log('redirected!');
+    }).catch((error) => {
+      console.error('error creating card! ' + error);
+    })
+  });
+
+  app.post('/teacher/card/deleteCard/', isLoggedIn, (req, res) => {
+    deckModel.deleteCard(req.body.cardID).then(() => {
+      res.redirect('/teacher/deck/deck/?deckID=' + req.body.deckID);
+    }).catch((error) => {
+      console.error('error deleting card! ' + error);
+    });
+  });
+
+  app.post('/teacher/card/editCard/', isLoggedIn, (req, res) => {
+    deckModel.editCard(req.body.cardID, req.body.front, req.body.back, req.body.datatype).then(() => {
+      res.redirect('/teacher/deck/deck/?deckID=' + req.body.deckID);
+    }).catch((error) => {
+      console.error('error editing card! ' + error);
+    });
+  });
 
   app.get('/teacher/deck/deck/*', isLoggedIn, (req, res) => {
     let deckFind = deckModel.getInfo(req.query.deckID);
-    Promise.all([deckFind]).then((results) => {
+    let cardsFind = deckModel.getCards(req.query.deckID);
+
+    Promise.all([deckFind, cardsFind]).then((results) => {
       let deckInfo = results[0];
+      let cardList = results[1] || [];
+
+      console.log('deckInfo = ' + JSON.stringify(deckInfo));
+      console.log('cardList = ' + JSON.stringify(cardList));
+
       res.render('teacher/deck', {
-        deckInfo: deckInfo
+        deckInfo: deckInfo,
+        cardList: cardList
       });
     });
   });
+
+  app.post('/teacher/card/update/*', (req, res) => {
+    console.log('req.body = ' + JSON.stringify(req.body));
+  })
 
   app.get('/teacher/class/deleteDeck/*', isLoggedIn, (req, res) => {
     console.log('deleting deck: deckID = ' + req.query.deckID);

@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../public/style.css">
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
+
+
 </head>
 <body>
 <div class="container">
@@ -16,15 +18,124 @@
 
   <ul class="nav nav-tabs nav-justified">
     <li role="presentation" class="active"><a data-toggle="tab" href="#edit">Cards</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#students">Students</a></li>
     <li role="presentation"><a data-toggle="tab" href="#statistics">Statistics</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="edit" class="tab-pane fade in active">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title panel-heading"> Cards </h3>
+        </div>
+        <table class="table" id="hiddenButtonTable">
+          <tr>
+            <th>Front</th>
+            <th>Back</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
 
-    </div>
-    <div id="students" class="tab-pane fade">
+          <% console.log('EJS cardList = ' + JSON.stringify(cardList)); %>
+          <% cardList.forEach(function(card) { %>
+          <% console.log('card._id ' + card._id); %>
+          <tr>
+            <td>
+              <textarea class="form-control noHorizontalResize" rows="3"
+                        id="front_<%= card._id %>"><%= card.front %></textarea>
+            </td>
+
+            <td>
+              <textarea class="form-control noHorizontalResize" rows="3"
+                        id="back_<%= card._id %>"><%= card.back %></textarea>
+            </td>
+
+            <td>
+              <label><input id="textRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>" checked>
+                Text</label><br>
+              <label><input id="imageRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>"
+                        <%= (card.dataType == 'image') ? 'checked' : '' %> disabled> Image</label><br>
+              <label><input id="videoRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>"
+                        <%= (card.dataType == 'video') ? 'checked' : '' %> disabled> Video</label><br>
+            </td>
+
+            <td>
+              <form action="/teacher/card/deleteCard/" method="post">
+                <input type="hidden" name="cardID" value="<%= card._id %>">
+                <input type="hidden" name="deckID" value="<%= deckInfo._id %>">
+                <button type="submit" name="delete" class="btn btn-danger hidingButton">Delete</button>
+              </form>
+              <br>
+              <form action="/teacher/card/editCard/" method="post">
+                <input type="hidden" name="cardID" value="<%= card._id %>">
+                <input type="hidden" name="deckID" value="<%= deckInfo._id %>">
+                <input type="hidden" id="hiddenFrontInput_<%= card._id %>" name="front">
+                <input type="hidden" id="hiddenBackInput_<%= card._id %>" name="back">
+                <input type="hidden" id="hiddenDatatypeInput_<%= card._id %>" name="datatype" value=<%= card.datatype %>>
+                <button type="submit" id="saveButton_<%= card._id %>" name="save" class="btn btn-success hidingButton"
+                        disabled>Save
+                </button>
+              </form>
+            </td>
+
+            <!-- Please don't judge -->
+            <!-- Stupid stuff because you can't put a form into a table -->
+            <script>
+              $('#front_<%= card._id %>').change(function () {
+                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
+                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
+                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
+              });
+              $('#back_<%= card._id %>').change(function () {
+                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
+                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
+                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
+              });
+              $('#textRadio_<%= card._id %>').change(function () {
+                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
+                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
+                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
+                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'text');
+              });
+              $('#imageRadio_<%= card._id %>').change(function () {
+                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
+                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
+                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
+                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'image');
+              });
+              $('#videoRadio_<%= card._id %>').change(function () {
+                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
+                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
+                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'text');
+                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'video');
+              });
+            </script>
+          </tr>
+          <% }); %>
+
+          <tr>
+            <% console.log('ejs deckID = ' + deckInfo._id); %>
+            <form action="/teacher/card/create/?deckID=<%= deckInfo._id %>" method="post">
+              <td>
+                <textarea class="form-control noHorizontalResize" name="front" rows="3"></textarea>
+              </td>
+
+              <td>
+                <textarea class="form-control noHorizontalResize" name="back" rows="3"></textarea>
+              </td>
+
+              <td>
+                <label><input type="radio" value="text" name="datatype" checked> Text</label> <br>
+                <label><input type="radio" value="image" name="datatype" disabled> Image</label> <br>
+                <label><input type="radio" value="video" name="datatype" disabled> Video</label> <br>
+              </td>
+
+              <td>
+                <button type="submit" class="btn btn-primary">Add Card</button>
+              </td>
+            </form>
+          </tr>
+        </table>
+      </div>
 
     </div>
     <div id="statistics" class="tab-pane fade">

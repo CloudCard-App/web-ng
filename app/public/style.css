@@ -6,3 +6,15 @@
     width: 75%;
     padding-top: 8px;
 }
+
+table#hiddenButtonTable tr td button.hidingButton {
+    display: none;
+}
+
+table#hiddenButtonTable tr:hover td button.hidingButton {
+    display: inline;
+}
+
+textarea.form-control.noHorizontalResize {
+    resize: vertical;
+}

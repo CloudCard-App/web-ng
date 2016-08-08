@@ -68,9 +68,8 @@
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#edit' %>>Edit</a></li>
-                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#students' %>>Students</a></li>
-                  <li><a href=<%= '/teacher/deck/?id=' + deck._id + '#stats' %>>Statistics</a></li>
+                  <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#edit' %>>Edit</a></li>
+                  <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#statistics' %>>Statistics</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href=<%= '/teacher/class/deleteDeck/?deckID=' + deck._id + '&classID=' + classInfo._id %>>Delete</a></li>
                 </ul>
