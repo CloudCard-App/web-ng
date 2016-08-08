@@ -1,6 +1,8 @@
 let teacherModel = require('./models/teacher/teacher');
-let classModel = require('./models/teacher/class');
-let deckModel = require('./models/teacher/deck');
+
+let classRoutes = require('./routes/teacher/class');
+let deckRoutes = require('./routes/teacher/deck');
+let cardRoutes = require('./routes/teacher/card');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -32,96 +34,21 @@ module.exports = function (passport, app) {
     });
   });
 
-  app.post('/teacher/createClass', isLoggedIn, (req, res) => {
-    teacherModel.createClass(req.user._id, req.body.name, req.body.password).then((newClass) => {
-      res.redirect('/teacher/dashboard');
-    }).catch((error) => {
-    });
-  });
+  app.post('/teacher/class/createClass', isLoggedIn, classRoutes.createClass);
 
-  app.get('/teacher/class/class/*', isLoggedIn, (req, res) => {
-    let classID = req.query.id;
-    let classInfo = classModel.getInfo(classID);
-    let deckList = classModel.getDecks(classID);
+  app.get('/teacher/class/class/*', isLoggedIn, classRoutes.class);
 
-    Promise.all([classInfo, deckList]).then((results) => {
-      console.log('done! ' + results);
-      let classInfo = results[0];
-      let deckList = results[1];
+  app.post('/teacher/deck/createDeck', isLoggedIn, deckRoutes.createDeck);
 
-      res.render('teacher/class', {
-        classInfo: classInfo,
-        deckList: deckList
-      });
-    }).catch((error) => {
-      console.error('argh! :( ' + error);
-    });
-  });
+  app.get('/teacher/deck/deleteDeck/*', isLoggedIn, deckRoutes.deleteDeck);
 
-  app.post('/teacher/class/createDeck', isLoggedIn, (req, res) => {
-    classModel.createDeck(req.query.classID, req.body.name, req.body.description).then(() => {
-      res.redirect('/teacher/class/class/?id=' + req.query.classID);
-    }).catch((error) => {
-      console.log('error! ' + error);
-    });
-  });
+  app.get('/teacher/deck/deck/*', isLoggedIn, deckRoutes.deck);
 
-  app.post('/teacher/card/create/*', isLoggedIn, (req, res) => {
-    deckModel.createCard(req.query.deckID, req.body.front, req.body.back, req.body.datatype).then(() => {
-      console.log('created card deckID = ' + req.query.deckID);
-      res.redirect('/teacher/deck/deck/?deckID=' + req.query.deckID);
-      console.log('redirected!');
-    }).catch((error) => {
-      console.error('error creating card! ' + error);
-    })
-  });
+  app.post('/teacher/card/create/*', isLoggedIn, cardRoutes.create);
 
-  app.post('/teacher/card/deleteCard/', isLoggedIn, (req, res) => {
-    deckModel.deleteCard(req.body.cardID).then(() => {
-      res.redirect('/teacher/deck/deck/?deckID=' + req.body.deckID);
-    }).catch((error) => {
-      console.error('error deleting card! ' + error);
-    });
-  });
+  app.post('/teacher/card/deleteCard/', isLoggedIn, cardRoutes.delete);
 
-  app.post('/teacher/card/editCard/', isLoggedIn, (req, res) => {
-    deckModel.editCard(req.body.cardID, req.body.front, req.body.back, req.body.datatype).then(() => {
-      res.redirect('/teacher/deck/deck/?deckID=' + req.body.deckID);
-    }).catch((error) => {
-      console.error('error editing card! ' + error);
-    });
-  });
-
-  app.get('/teacher/deck/deck/*', isLoggedIn, (req, res) => {
-    let deckFind = deckModel.getInfo(req.query.deckID);
-    let cardsFind = deckModel.getCards(req.query.deckID);
-
-    Promise.all([deckFind, cardsFind]).then((results) => {
-      let deckInfo = results[0];
-      let cardList = results[1] || [];
-
-      console.log('deckInfo = ' + JSON.stringify(deckInfo));
-      console.log('cardList = ' + JSON.stringify(cardList));
-
-      res.render('teacher/deck', {
-        deckInfo: deckInfo,
-        cardList: cardList
-      });
-    });
-  });
-
-  app.post('/teacher/card/update/*', (req, res) => {
-    console.log('req.body = ' + JSON.stringify(req.body));
-  })
-
-  app.get('/teacher/class/deleteDeck/*', isLoggedIn, (req, res) => {
-    console.log('deleting deck: deckID = ' + req.query.deckID);
-    console.log('deleting deck: classID = ' + req.query.classID);
-
-    classModel.deleteDeck(req.query.deckID).then(() => {
-      res.redirect('/teacher/class/class/?id=' + req.query.classID);
-    });
-  });
+  app.post('/teacher/card/editCard/', isLoggedIn, cardRoutes.edit);
 
   app.get('/student/dashboard', isLoggedIn, (req, res) => {
     res.render('student/dashboard', {user: req.user});

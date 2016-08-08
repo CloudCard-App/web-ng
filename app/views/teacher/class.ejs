@@ -36,8 +36,11 @@
                   <h4 class="modal-title">New Deck</h4>
                 </div>
                 <div class="modal-body">
-                  <form action="/teacher/class/createDeck/?classID=<%= classInfo._id %>" method="post">
+                  <form action="/teacher/deck/createDeck/?classID=<%= classInfo._id %>" method="post">
+                    <label>Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Name">
+                    <br>
+                    <label>Description</label>
                     <input type="text" class="form-control" name="description" placeholder="Description">
                     <br>
                     <button class="btn btn-primary" type="submit">Create</button>
@@ -71,7 +74,7 @@
                   <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#edit' %>>Edit</a></li>
                   <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#statistics' %>>Statistics</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href=<%= '/teacher/class/deleteDeck/?deckID=' + deck._id + '&classID=' + classInfo._id %>>Delete</a></li>
+                  <li><a href=<%= '/teacher/deck/deleteDeck/?deckID=' + deck._id + '&classID=' + classInfo._id %>>Delete</a></li>
                 </ul>
               </div>
             </td>
