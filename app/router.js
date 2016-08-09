@@ -1,10 +1,11 @@
-let classRoutes = require('./routes/teacher/class');
-let deckRoutes = require('./routes/teacher/deck');
-let cardRoutes = require('./routes/teacher/card');
-let teacherDashboard = require('./routes/teacher/dashboard');
+let teacherDashboardRoutes = require('./routes/teacher/dashboard');
+let teacherClassRoutes = require('./routes/teacher/class');
+let teacherDeckRoutes = require('./routes/teacher/deck');
+let teacherCardRoutes = require('./routes/teacher/card');
 
 let studentDashboardRoutes = require('./routes/student/dashboard');
 let studentEnrollRoutes = require('./routes/student/enroll');
+let studentClassRoutes = require('./routes/student/class');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -32,23 +33,23 @@ module.exports = function (passport, app) {
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- TEACHER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-  app.get('/teacher/dashboard', isLoggedIn, teacherDashboard.dashboard);
+  app.get('/teacher/dashboard', isLoggedIn, teacherDashboardRoutes.dashboard);
 
-  app.post('/teacher/class/createClass', isLoggedIn, classRoutes.createClass);
+  app.post('/teacher/class/createClass', isLoggedIn, teacherClassRoutes.createClass);
 
-  app.get('/teacher/class/class/*', isLoggedIn, classRoutes.class);
+  app.get('/teacher/class/class/*', isLoggedIn, teacherClassRoutes.class);
 
-  app.post('/teacher/deck/createDeck', isLoggedIn, deckRoutes.createDeck);
+  app.post('/teacher/deck/createDeck', isLoggedIn, teacherDeckRoutes.createDeck);
 
-  app.get('/teacher/deck/deleteDeck/*', isLoggedIn, deckRoutes.deleteDeck);
+  app.get('/teacher/deck/deleteDeck/*', isLoggedIn, teacherDeckRoutes.deleteDeck);
 
-  app.get('/teacher/deck/deck/*', isLoggedIn, deckRoutes.deck);
+  app.get('/teacher/deck/deck/*', isLoggedIn, teacherDeckRoutes.deck);
 
-  app.post('/teacher/card/create/*', isLoggedIn, cardRoutes.create);
+  app.post('/teacher/card/create/*', isLoggedIn, teacherCardRoutes.create);
 
-  app.post('/teacher/card/deleteCard/', isLoggedIn, cardRoutes.delete);
+  app.post('/teacher/card/deleteCard/', isLoggedIn, teacherCardRoutes.delete);
 
-  app.post('/teacher/card/editCard/', isLoggedIn, cardRoutes.edit);
+  app.post('/teacher/card/editCard/', isLoggedIn, teacherCardRoutes.edit);
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- STUDENT -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -58,7 +59,9 @@ module.exports = function (passport, app) {
 
   app.post('/student/enroll/enroll/', isLoggedIn, studentEnrollRoutes.enroll);
 
-  app.get('/student/class/class', isLoggedIn, )
+  app.get('/student/class/class/*', isLoggedIn, studentClassRoutes.class);
+
+  app.get('/student/deck/study/*', isLoggedIn, )
 
   app.get('/logout', (req, res) => {
     req.logout();

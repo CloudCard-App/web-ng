@@ -88,15 +88,13 @@
       <% let classHere = classList[i] %>
       <tr>
         <td><%= i + 1 %></td>
-        <td><a href='/student/class/class/?classID=<%= classHere._id %>'> <%= classHere.name %> </a></td>
+        <td><a href='/student/class/class/?classID=<%= classHere._id %>'><%= classHere.name %></a></td>
         <td><%= classHere.teacher.google.name %></td>
       </tr>
       <% } %>
     </table>
 
   </div>
-</div>
-</div>
 </div>
 </body>
 

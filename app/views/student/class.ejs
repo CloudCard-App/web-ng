@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="page-header text-center">
+    <h1><i class="fa fa-mortar-board"></i><%= classInfo.name %></h1>
+    <small>Taught by <%= classInfo.teacher.google.name %></small>
+  </div>
+
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group" role="group">
+      <a href="/student/dashboard" class="btn btn-default">Dashboard</a>
+    </div>
+
+    <div class="btn-group pull-right" role="group">
+      <a href="/logout" class="btn btn-warning">Logout</a>
+    </div>
+  </div><br>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"> Decks for <%= classInfo.name %> </h3>
+    </div>
+
+    <div class="panel-body">
+      <table class="table" id="hiddenButtonTable">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+
+        <% for (let i = 0; i < deckList.length; i++) { %>
+        <% let deckHere = deckList[i]; %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><a href="/student/deck/study/?deckID=<%= deckHere._id %>"><%= deckHere.name %></a></td>
+          <td><%= deckHere.description %></td>
+        </tr>
+        <% } %>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
