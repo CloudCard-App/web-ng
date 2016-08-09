@@ -79,8 +79,8 @@
     <table class="table">
       <tr>
         <th>#</th>
-        <th>Teacher</th>
         <th>Class Name</th>
+        <th>Teacher</th>
       </tr>
 
       <% console.log('classList = ' + JSON.stringify(classList)); %>
@@ -88,8 +88,8 @@
       <% let classHere = classList[i] %>
       <tr>
         <td><%= i + 1 %></td>
-        <td><%= classHere.teacher.google.name %></td>
         <td><a href='/student/class/class/?classID=<%= classHere._id %>'> <%= classHere.name %> </a></td>
+        <td><%= classHere.teacher.google.name %></td>
       </tr>
       <% } %>
     </table>
