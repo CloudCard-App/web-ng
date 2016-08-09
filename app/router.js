@@ -4,7 +4,7 @@ let cardRoutes = require('./routes/teacher/card');
 let teacherDashboard = require('./routes/teacher/dashboard');
 
 let studentDashboardRoutes = require('./routes/student/dashboard');
-let studentRegisterRoutes = require('./routes/student/enroll');
+let studentEnrollRoutes = require('./routes/student/enroll');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -54,9 +54,11 @@ module.exports = function (passport, app) {
 
   app.get('/student/dashboard', isLoggedIn, studentDashboardRoutes.dashboard);
 
-  app.get('/student/enroll/classesForTeacher/*', isLoggedIn, studentRegisterRoutes.classesForTeacher);
+  app.get('/student/enroll/classesForTeacher/*', isLoggedIn, studentEnrollRoutes.classesForTeacher);
 
-  app.post('/student/enroll/enroll/', isLoggedIn, studentRegisterRoutes.enroll);
+  app.post('/student/enroll/enroll/', isLoggedIn, studentEnrollRoutes.enroll);
+
+  app.get('/student/class/class', isLoggedIn, )
 
   app.get('/logout', (req, res) => {
     req.logout();

@@ -31,6 +31,7 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Join New Class</h4>
             </div>
+
             <div class="modal-body">
               <form action="/student/enroll/enroll/" method="post">
                 <label>Select Teacher</label>
@@ -69,11 +70,33 @@
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </div>
+
+    <!-- Now for teh tablez -->
+
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Teacher</th>
+        <th>Class Name</th>
+      </tr>
+
+      <% console.log('classList = ' + JSON.stringify(classList)); %>
+      <% for (let i = 0; i < classList.length; i++) { %>
+      <% let classHere = classList[i] %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= classHere.teacher.google.name %></td>
+        <td><a href='/student/class/class/?classID=<%= classHere._id %>'> <%= classHere.name %> </a></td>
+      </tr>
+      <% } %>
+    </table>
+
   </div>
+</div>
+</div>
 </div>
 </body>
 
