@@ -1,5 +1,5 @@
-let teacherModel = require('../../models/teacher/teacher');
-let classModel = require('../../models/teacher/class');
+let teacherModel = require('../../models/teacher');
+let classModel = require('../../models/class');
 
 module.exports.createClass = (req, res) => {
   teacherModel.createClass(req.user._id, req.body.name, req.body.password).then(() => {

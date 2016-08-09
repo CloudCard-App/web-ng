@@ -1,8 +1,12 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
 <div class="container">
@@ -11,20 +15,62 @@
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
   </div>
 
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="well">
-        <h3>Profile</h3>
-        <p>
-          <strong>Name:</strong> <%= user.google.name %><br>
-          <strong>Email:</strong> <%= user.google.email %><br>
-        </p>
-      </div>
-    </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title pull-left"> Your Classes </h3>
+      <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#joinClass">
+        Join New Class
+      </button>
+      <div class="clearfix"></div>
 
-    <div class="col-sm-6">
-      <div class="well">
-        <h3>Your Classes</h3>
+      <div id="joinClass" class="modal fade" role="form">
+        <div class="modal-dialog">
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Join New Class</h4>
+            </div>
+            <div class="modal-body">
+              <form action="/student/enroll/enroll/" method="post">
+                <label>Select Teacher</label>
+                <script>
+                  $(document).ready(function () {
+                    $("#teacherSelect").change(function () {
+                      let teacherID = this.value;
+                      console.log('optionSelected = ' + teacherID);
+                      $.get('/student/enroll/classesForTeacher/?teacherID=' + teacherID, function (data) {
+                        console.log('got data = ' + data);
+                        $("#teacherClassSelect").empty();
+                        data.forEach(function (classHere) {
+                          $("#teacherClassSelect").append($("<option></option>").attr("value", classHere._id).text(classHere.name));
+                        });
+                      });
+                    });
+                  });
+                </script>
+
+                <select class="form-control" id="teacherSelect" name="teacherID">
+                  <% teacherList.forEach(function(teacher) { %>
+                  <option value=<%= teacher._id %>><%= teacher.google.name %></option>
+                  <% }); %>
+                </select>
+                <br>
+                <label>Select Class</label>
+                <select class="form-control" id="teacherClassSelect" name="classID">
+                  <% teacherClassList.forEach(function(classHere) { %>
+                  <option value=<%= classHere._id %>><%= classHere.name %></option>
+                  <% }); %>
+                </select>
+                <br>
+                <label>Password</label><br>
+                <input type="password" name="password">
+                <button class="btn btn-primary pull-right" type="submit">Join Class</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

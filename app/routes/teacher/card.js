@@ -1,4 +1,4 @@
-let deckModel = require('../../models/teacher/deck');
+let deckModel = require('../../models/deck');
 
 module.exports.create = (req, res) => {
   deckModel.createCard(req.query.deckID, req.body.front, req.body.back, req.body.datatype).then(() => {

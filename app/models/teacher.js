@@ -1,5 +1,4 @@
-let request = require('request');
-let requester = require('../requester');
+let requester = require('./requester');
 
 module.exports.getClassList = function (teacherID) {
   let path = '/class/list/?teacherID=' + teacherID;

@@ -1,4 +1,4 @@
-let requester = require('../requester');
+let requester = require('./requester');
 
 module.exports.getDecks = function (classID) {
   let url = '/deck/list/?classID=' + classID.replace(/^"(.*)"$/, '$1'); // wtf

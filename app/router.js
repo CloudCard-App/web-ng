@@ -1,8 +1,10 @@
-let teacherModel = require('./models/teacher/teacher');
-
 let classRoutes = require('./routes/teacher/class');
 let deckRoutes = require('./routes/teacher/deck');
 let cardRoutes = require('./routes/teacher/card');
+let teacherDashboard = require('./routes/teacher/dashboard');
+
+let studentDashboardRoutes = require('./routes/student/dashboard');
+let studentRegisterRoutes = require('./routes/student/enroll');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
@@ -11,7 +13,12 @@ module.exports = function (passport, app) {
 
   app.get('/auth/google/teacher', passport.authenticate('teacher', {scope: ['profile', 'email']}));
 
-  app.get('/auth/google/student', passport.authenticate('student', {scope: ['profile', 'email']}));
+  app.get('/auth/google/student', passport.authenticate('student', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+    ]
+  }));
 
   app.get('/auth/google/callback/teacher', passport.authenticate('teacher', {
     successRedirect: '/teacher/dashboard',
@@ -23,16 +30,9 @@ module.exports = function (passport, app) {
     failureRedirect: '/'
   }));
 
-  app.get('/teacher/dashboard', isLoggedIn, (req, res) => {
-    teacherModel.getClassList(req.user._id).then((classes) => {
-      res.render('teacher/dashboard', {
-        'user': {
-          'info': req.user,
-          'classes': classes
-        }
-      });
-    });
-  });
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- TEACHER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  app.get('/teacher/dashboard', isLoggedIn, teacherDashboard.dashboard);
 
   app.post('/teacher/class/createClass', isLoggedIn, classRoutes.createClass);
 
@@ -50,9 +50,13 @@ module.exports = function (passport, app) {
 
   app.post('/teacher/card/editCard/', isLoggedIn, cardRoutes.edit);
 
-  app.get('/student/dashboard', isLoggedIn, (req, res) => {
-    res.render('student/dashboard', {user: req.user});
-  });
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- STUDENT -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  app.get('/student/dashboard', isLoggedIn, studentDashboardRoutes.dashboard);
+
+  app.get('/student/enroll/classesForTeacher/*', isLoggedIn, studentRegisterRoutes.classesForTeacher);
+
+  app.post('/student/enroll/enroll/', isLoggedIn, studentRegisterRoutes.enroll);
 
   app.get('/logout', (req, res) => {
     req.logout();

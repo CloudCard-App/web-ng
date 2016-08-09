@@ -1,4 +1,4 @@
-let requester = require('../requester');
+let requester = require('./requester');
 
 module.exports.getInfo = function (deckID) {
   let url = '/deck/info/?deckID=' + deckID;

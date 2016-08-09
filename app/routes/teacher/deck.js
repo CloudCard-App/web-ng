@@ -1,5 +1,5 @@
-let classModel = require('../../models/teacher/class');
-let deckModel = require('../../models/teacher/deck');
+let classModel = require('../../models/class');
+let deckModel = require('../../models/deck');
 
 module.exports.createDeck = (req, res) => {
   classModel.createDeck(req.query.classID, req.body.name, req.body.description).then(() => {

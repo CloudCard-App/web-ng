@@ -1,4 +1,4 @@
-let teacherModel = require('../../models/teacher/teacher');
+let teacherModel = require('../../models/teacher');
 
 module.exports.dashboard = (req, res) => {
   teacherModel.getClassList(req.user._id).then((classes) => {
