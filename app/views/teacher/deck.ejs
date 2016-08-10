@@ -29,6 +29,7 @@
   <ul class="nav nav-tabs nav-justified">
     <li role="presentation" class="active"><a data-toggle="tab" href="#edit">Cards</a></li>
     <li role="presentation"><a data-toggle="tab" href="#statistics">Statistics</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#preview">Preview</a></li>
   </ul>
 
   <div class="tab-content">
@@ -93,29 +94,21 @@
               $('#front_<%= card._id %>').change(function () {
                 $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
                 $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
-                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
               });
               $('#back_<%= card._id %>').change(function () {
                 $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
                 $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
               });
               $('#textRadio_<%= card._id %>').change(function () {
                 $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
-                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
                 $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'text');
               });
               $('#imageRadio_<%= card._id %>').change(function () {
                 $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
-                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
                 $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'image');
               });
               $('#videoRadio_<%= card._id %>').change(function () {
                 $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
-                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'text');
                 $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'video');
               });
             </script>
@@ -148,8 +141,69 @@
       </div>
 
     </div>
+
     <div id="statistics" class="tab-pane fade">
 
+    </div>
+
+    <div id="preview" class="tab pane fade">
+
+      <script>
+        var cardCount = 0;
+        var cardList = [];
+        <% cardList.forEach(function(card) { %>
+        cardList.push({
+          front: "<%= card.front %>",
+          back: "<%= card.back %>",
+          datatype: "<%= card.datatype %>"
+        });
+        <% }); %>
+
+        $(document).keypress(function (event) {
+          if (event.which == 32) {
+            console.log('space pressed!');
+            // Space
+            console.log('cardCount < cardList.length');
+            if ($('#cardFront').text() && !$('#cardBack').text()) {
+              var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
+              $('#cardBack').text(cardBack);
+            } else if ($('#cardFront').text() && $('#cardBack').text()) {
+              if (cardCount < cardList.length - 1) {
+                cardCount++;
+                $('#cardBack').text('');
+                var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
+                $('#cardFront').text(cardFront);
+                $('#deckProgress').prop('aria-valuenow', cardCount + 1);
+                $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
+                $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+              }
+            }
+          }
+        });
+
+        $(document).ready(function () {
+          $('#deckProgress').prop('aria-valuemax', cardList.length).prop('style', 'width: ' + 1 / cardList.length * 100 + '%');
+          $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+        })
+      </script>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="progress panel-title">
+            <div id="deckProgress" class="progress-bar" role="progressbar"></div>
+          </div>
+        </div>
+
+        <div class="panel-body row">
+          <div class="well col-md-5 paddedWell">
+            <h4><div id="cardFront"><%= cardList[0].front %></div></h4>
+          </div>
+
+          <div class="well col-md-5 paddedWell">
+            <h4><div id="cardBack"></div></h4>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
