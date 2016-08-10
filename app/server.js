@@ -37,5 +37,5 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require(__base + 'router.js')(passport, app);
 
-app.listen(8090);
-console.info('Listening on port 8090!');
+app.listen(process.env.port);
+console.info('Listening on port ' + process.env.port);
