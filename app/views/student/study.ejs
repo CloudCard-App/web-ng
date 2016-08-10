@@ -26,12 +26,14 @@
         // Space
         console.log('cardCount < cardList.length');
         if ($('#cardFront').text() && !$('#cardBack').text()) {
-          $('#cardBack').text(cardList[cardCount].back);
+          var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
+          $('#cardBack').text(cardBack);
         } else if ($('#cardFront').text() && $('#cardBack').text()) {
           if (cardCount < cardList.length - 1) {
             cardCount++;
             $('#cardBack').text('');
-            $('#cardFront').text(cardList[cardCount].front);
+            var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
+            $('#cardFront').text(cardFront);
             $('#deckProgress').prop('aria-valuenow', cardCount + 1);
             $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
             $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
@@ -74,11 +76,11 @@
 
     <div class="panel-body row">
       <div class="well col-md-5 paddedWell">
-        <h4><span id="cardFront"><%= cardList[0].front %></span></h4>
+        <h4><div id="cardFront"><%= cardList[0].front %></div></h4>
       </div>
 
       <div class="well col-md-5 paddedWell">
-        <h4><span id="cardBack"></span></h4>
+        <h4><div id="cardBack"></div></h4>
       </div>
     </div>
   </div>
