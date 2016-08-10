@@ -22,7 +22,8 @@ module.exports.deck = (req, res) => {
 
     res.render('teacher/deck', {
       deckInfo: deckInfo,
-      cardList: cardList
+      cardList: cardList,
+      classInfo: deckInfo.class
     });
   });
 };

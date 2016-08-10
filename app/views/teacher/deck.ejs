@@ -7,14 +7,24 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="/public/style.css">
-
-
 </head>
 <body>
 <div class="container">
   <div class="page-header text-center">
     <h1><%= deckInfo.name %></h1>
   </div>
+
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group" role="group">
+      <a href="/teacher/dashboard" class="btn btn-default">Dashboard</a>
+      <a href="/teacher/class/class/?classID=<%= classInfo._id %>" class="btn btn-default"><%= classInfo.name %></a>
+    </div>
+
+    <div class="btn-group pull-right" role="group">
+      <a href="/logout" class="btn btn-warning">Logout</a>
+    </div>
+  </div><br>
+
 
   <ul class="nav nav-tabs nav-justified">
     <li role="presentation" class="active"><a data-toggle="tab" href="#edit">Cards</a></li>

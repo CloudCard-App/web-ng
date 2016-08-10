@@ -10,7 +10,7 @@ module.exports.createClass = (req, res) => {
 };
 
 module.exports.class = (req, res) => {
-  let classID = req.query.id;
+  let classID = req.query.classID;
   let classInfo = classModel.getInfo(classID);
   let deckList = classModel.getDecks(classID);
 

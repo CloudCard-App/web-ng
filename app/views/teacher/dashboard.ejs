@@ -10,8 +10,13 @@
 <div class="container">
   <div class="page-header text-center">
     <h1>Teacher Dashboard</h1>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
   </div>
+
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group pull-right" role="group">
+      <a href="/logout" class="btn btn-warning">Logout</a>
+    </div>
+  </div><br>
 
   <div class="row">
     <div class="col-sm-8">
@@ -26,7 +31,7 @@
 
           <% for (let i = 0; i < user.classes.length; i++) { %>
           <tr>
-            <% let infourl = "/teacher/class/class/?id=" + JSON.stringify(user.classes[i]._id) %>
+            <% let infourl = "/teacher/class/class/?classID=" + JSON.stringify(user.classes[i]._id) %>
             <td><a href=<%= infourl %>> <%= user.classes[i].name %> </a></td>
             <td><%= user.classes[i].password %></td>
           </tr>
