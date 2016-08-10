@@ -3,7 +3,7 @@ let deckModel = require('../../models/deck');
 
 module.exports.createDeck = (req, res) => {
   classModel.createDeck(req.query.classID, req.body.name, req.body.description).then(() => {
-    res.redirect('/teacher/class/class/?id=' + req.query.classID);
+    res.redirect('/teacher/class/class/?classID=' + req.query.classID);
   }).catch((error) => {
     console.log('error! ' + error);
   });
@@ -30,6 +30,6 @@ module.exports.deck = (req, res) => {
 
 module.exports.deleteDeck = (req, res) => {
   classModel.deleteDeck(req.query.deckID).then(() => {
-    res.redirect('/teacher/class/class/?id=' + req.query.classID);
+    res.redirect('/teacher/class/class/?classID=' + req.query.classID);
   });
 };
