@@ -1,12 +1,12 @@
 module.exports = {
   teacher: {
-    'clientID': '87715693320-b4cnic8pv63emnepbhj7npjc9rgd4s4b.apps.googleusercontent.com',
-    'clientSecret': 'ABk7yyJnchO3X0NqcuZEORM2',
-    'callbackURL': 'http://localhost:8090/auth/google/callback/teacher'
+    'clientID': process.env.CC_TEACHER_CLIENT_ID,
+    'clientSecret': process.env.CC_TEACHER_CLIENT_SECRET,
+    'callbackURL': process.env.CC_TEACHER_CALLBACK_URL
   },
   student: {
-    'clientID': '87715693320-cok3oqqha1mtksrmdhpucrnqlp05fiva.apps.googleusercontent.com',
-    'clientSecret': 'tAGc_XC86Z2JSWcYBbxJWMxa',
-    'callbackURL': 'http://localhost:8090/auth/google/callback/student'
+    'clientID': process.env.CC_STUDENT_CLIENT_ID,
+    'clientSecret': process.env.CC_STUDENT_CLIENT_SECRET,
+    'callbackURL': process.env.CC_STUDENT_CALLBACK_URL
   }
 };
