@@ -16,3 +16,13 @@ module.exports.createClass = function (teacherID, className, classPass) {
   };
   return requester.post(path, data);
 };
+
+module.exports.deleteClass = function(classID) {
+  let path = '/class/delete';
+  let data = {
+    form: {
+      id: classID
+    }
+  };
+  return requester.delete(path, data);
+};

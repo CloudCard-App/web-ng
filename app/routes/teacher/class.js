@@ -27,3 +27,10 @@ module.exports.class = (req, res) => {
     console.error('argh! :( ' + error);
   });
 };
+
+module.exports.deleteClass = (req, res) => {
+  let classID = req.body.classID;
+  teacherModel.deleteClass(classID).then(() => {
+    res.redirect('/teacher/dashboard');
+  });
+};

@@ -40,6 +40,8 @@ module.exports = function (passport, app) {
 
   app.get('/teacher/class/class/*', isLoggedIn, teacherClassRoutes.class);
 
+  app.post('/teacher/class/deleteClass', isLoggedIn, teacherClassRoutes.deleteClass)
+
   app.post('/teacher/deck/createDeck', isLoggedIn, teacherDeckRoutes.createDeck);
 
   app.get('/teacher/deck/deleteDeck/*', isLoggedIn, teacherDeckRoutes.deleteDeck);

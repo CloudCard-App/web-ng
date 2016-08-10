@@ -3,7 +3,8 @@
 <head>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="/public/style.css">
@@ -22,11 +23,14 @@
     <div class="btn-group pull-right" role="group">
       <a href="/logout" class="btn btn-warning">Logout</a>
     </div>
-  </div><br>
+  </div>
+  <br>
 
   <ul class="nav nav-tabs nav-justified">
-    <li role="presentation" class="active"><a data-toggle="tab" href="#deckList">Decks</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#studentList">Students</a></li>
+    <li role="presentation" class="active"><a data-toggle="tab"
+                                              href="#deckList">Decks</a></li>
+    <li role="presentation"><a data-toggle="tab"
+                               href="#studentList">Students</a></li>
   </ul>
 
   <div class="tab-content">
@@ -34,7 +38,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title pull-left"> Your Decks </h3>
-          <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newDeck">New Deck</button>
+          <button type="button" class="btn btn-primary pull-right"
+                  data-toggle="modal" data-target="#newDeck">New Deck
+          </button>
           <div class="clearfix"></div>
 
           <div id="newDeck" class="modal fade" role="form">
@@ -42,18 +48,23 @@
 
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close"
+                          data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">New Deck</h4>
                 </div>
                 <div class="modal-body">
-                  <form action="/teacher/deck/createDeck/?classID=<%= classInfo._id %>" method="post">
+                  <form action="/teacher/deck/createDeck/?classID=<%= classInfo._id %>"
+                        method="post">
                     <label>Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Name">
+                    <input type="text" class="form-control" name="name"
+                           placeholder="Name">
                     <br>
                     <label>Description</label>
-                    <input type="text" class="form-control" name="description" placeholder="Description">
+                    <input type="text" class="form-control" name="description"
+                           placeholder="Description">
                     <br>
-                    <button class="btn btn-primary" type="submit">Create</button>
+                    <button class="btn btn-primary" type="submit">Create
+                    </button>
                   </form>
                 </div>
               </div>
@@ -71,20 +82,30 @@
           <% deckList.forEach(function(deck) { %>
           <% console.log('deck = ' + JSON.stringify(deck)); %>
           <tr>
-            <td><a href=<%= '/teacher/deck/deck/?deckID=' + deck._id %> ><%= deck.name %></a></td>
+            <td>
+              <a href=<%= '/teacher/deck/deck/?deckID=' + deck._id %>><%= deck.name %></a>
+            </td>
             <td><%= deck.description %></td>
             <td>
               <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn btn-default dropdown-toggle" type="button"
+                        id="dropdownMenu1"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="true">
                   ...
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#edit' %>>Edit</a></li>
-                  <li><a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#statistics' %>>Statistics</a></li>
+                  <li>
+                    <a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#edit' %>>Edit</a>
+                  </li>
+                  <li>
+                    <a href=<%= '/teacher/deck/deck/?id=' + deck._id + '#statistics' %>>Statistics</a>
+                  </li>
                   <li role="separator" class="divider"></li>
-                  <li><a href=<%= '/teacher/deck/deleteDeck/?deckID=' + deck._id + '&classID=' + classInfo._id %>>Delete</a></li>
+                  <li>
+                    <a href=<%= '/teacher/deck/deleteDeck/?deckID=' + deck._id + '&classID=' + classInfo._id %>>Delete</a>
+                  </li>
                 </ul>
               </div>
             </td>
