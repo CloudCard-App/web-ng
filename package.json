@@ -2,8 +2,7 @@
   "name": "teacherUI",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "monitor": "nodemon server.js"
+    "start": "node app/server.js",
   },
   "author": "Marc Bacvanski",
   "contributors": [
@@ -39,6 +38,6 @@
     "request": "latest"
   },
   "engines": {
-    "node": ">=0.12.7"
+    "node": "6.3.1"
   }
 }
