@@ -2,7 +2,7 @@
   "name": "teacherUI",
   "main": "server.js",
   "scripts": {
-    "start": "node app/server.js",
+    "start": "node app/server.js"
   },
   "author": "Marc Bacvanski",
   "contributors": [
