@@ -38,3 +38,6 @@ jspm_packages
 
 # Webstormz
 .idea/*
+
+# Environmentz
+.env
