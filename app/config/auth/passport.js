@@ -15,12 +15,12 @@ module.exports = function (passport) {
   // used to deserialize the user, finding based on id
   passport.deserializeUser(function (id, done) {
     console.log('deserializing user!');
-    request('http://localhost:8080/student/info/?id=' + id, function (error, response, body) {
+    request(process.env.CORE_URL + '/student/info/?id=' + id, function (error, response, body) {
       if (!error && response.statusCode == 200 && body) {
         console.log('deserialized student: ' + body);
         done(null, JSON.parse(body));
       } else {
-        request('http://localhost:8080/teacher/info/?id=' + id, function (error, response, body) {
+        request(process.env.CORE_URL + '/teacher/info/?id=' + id, function (error, response, body) {
           if (!error && response.statusCode == 200) {
             console.log('deserialized teacher: ' + body);
             done(null, JSON.parse(body));
@@ -39,7 +39,7 @@ module.exports = function (passport) {
     function (token, refreshToken, profile, done) {
       process.nextTick(function () {
         console.log('posting to register teacher!');
-        request.post('http://localhost:8080/teacher/register', {
+        request.post(process.env.CORE_URL + '/teacher/register', {
           form: {
             gid: profile.id,
             gtoken: token,
@@ -53,7 +53,8 @@ module.exports = function (passport) {
           return done(error, body);
         });
       });
-    }));
+    }
+  ));
 
   passport.use('student', new GoogleStrategy({
     clientID: authConfig.student.clientID,
@@ -62,7 +63,7 @@ module.exports = function (passport) {
   }, function (token, refreshToken, profile, done) {
     process.nextTick(function () {
       console.log('posting to register student!');
-      request.post('http://localhost:8080/student/register', {
+      request.post(process.env.CORE_URL + '/student/register', {
         form: {
           gid: profile.id,
           gtoken: token,
