@@ -1,0 +1,88 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet"
+        href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
+
+  <script>
+    var cardCount = 0;
+    var cardList = [];
+    <% cardList.forEach(function(card) { %>
+    cardList.push({
+      front: "<%= card.front %>",
+      back: "<%= card.back %>",
+      datatype: "<%= card.datatype %>"
+    });
+    <% }); %>
+
+    $(document).keypress(function (event) {
+      if (event.which == 32) {
+        console.log('space pressed!');
+        // Space
+        console.log('cardCount < cardList.length');
+        if ($('#cardFront').text() && !$('#cardBack').text()) {
+          $('#cardBack').text(cardList[cardCount].back);
+        } else if ($('#cardFront').text() && $('#cardBack').text()) {
+          if (cardCount < cardList.length - 1) {
+            cardCount++;
+            $('#cardBack').text('');
+            $('#cardFront').text(cardList[cardCount].front);
+            $('#deckProgress').prop('aria-valuenow', cardCount + 1);
+            $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
+            $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+          }
+        }
+      }
+    });
+
+    $(document).ready(function () {
+      $('#deckProgress').prop('aria-valuemax', cardList.length).prop('style', 'width: ' + 1 / cardList.length * 100 + '%');
+      $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+    })
+  </script>
+</head>
+<body>
+<div class="container">
+  <div class="page-header text-center">
+    <h1><i class="fa fa-mortar-board"></i><%= deckInfo.name %></h1>
+  </div>
+
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group" role="group">
+      <a href="/student/dashboard" class="btn btn-default">Dashboard</a>
+      <a href="/student/class/class/?classID=<%= classInfo._id %>"
+         class="btn btn-default"><%= classInfo.name %></a>
+    </div>
+
+    <div class="btn-group pull-right" role="group">
+      <a href="/logout" class="btn btn-warning">Logout</a>
+    </div>
+  </div>
+  <br>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="progress">
+        <div id="deckProgress" class="progress-bar" role="progressbar"></div>
+      </div>
+    </div>
+
+    <div class="panel-body row">
+      <div class="well col-md-5 paddedWell">
+        <h4><span id="cardFront"><%= cardList[0].front %></span></h4>
+      </div>
+
+      <div class="well col-md-5 paddedWell">
+        <h4><span id="cardBack"></span></h4>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

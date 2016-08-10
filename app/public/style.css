@@ -18,3 +18,9 @@ table#hiddenButtonTable tr:hover td button.hidingButton {
 textarea.form-control.noHorizontalResize {
     resize: vertical;
 }
+
+.paddedWell {
+    /* freakin' sorcery */
+    width: 46.78%;
+    margin: 15px;
+}
