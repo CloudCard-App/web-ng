@@ -60,29 +60,30 @@
 
     </div>
 
-    <div class="panel-body">
-      <table class="table" id="hiddenButtonTable">
-        <tr>
-          <th>Name</th>
-          <th>Password</th>
-          <th>Action</th>
-        </tr>
+    <table class="table" id="hiddenButtonTable">
+      <tr>
+        <th>Name</th>
+        <th>Password</th>
+        <th>Action</th>
+      </tr>
 
-        <% for (let i = 0; i < user.classes.length; i++) { %>
-        <tr>
-          <% let infourl = "/teacher/class/class/?classID=" + JSON.stringify(user.classes[i]._id) %>
-          <td><a href=<%= infourl %>> <%= user.classes[i].name %> </a></td>
-          <td><%= user.classes[i].password %></td>
-          <td>
-            <form action="/teacher/class/deleteClass" method="post">
-              <input type="hidden" name="classID"  value="<%= user.classes[i]._id %>">
-              <button class="btn btn-sm btn-danger hidingButton" type="submit">Delete</button>
-            </form>
-          </td>
-        </tr>
-        <% } %>
-      </table>
-    </div>
+      <% for (let i = 0; i < user.classes.length; i++) { %>
+      <tr>
+        <% let infourl = "/teacher/class/class/?classID=" + JSON.stringify(user.classes[i]._id) %>
+        <td><a href=<%= infourl %>> <%= user.classes[i].name %> </a></td>
+        <td><%= user.classes[i].password %></td>
+        <td>
+          <form action="/teacher/class/deleteClass" method="post">
+            <input type="hidden" name="classID"
+                   value="<%= user.classes[i]._id %>">
+            <button class="btn btn-sm btn-danger hidingButton" type="submit">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    </table>
   </div>
 </div>
 </body>
