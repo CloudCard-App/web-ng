@@ -37,6 +37,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require(__base + 'router.js')(passport, app);
 
-console.log('port = ' + process.env.port);
-app.listen(process.env.port);
-console.info('Listening on port ' + process.env.port);
+console.log('port = ' + process.env.PORT);
+app.listen(process.env.PORT);
+console.info('Listening on port ' + process.env.PORT);
