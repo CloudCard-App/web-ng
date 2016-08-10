@@ -20,23 +20,40 @@
     });
     <% }); %>
 
-    $(document).keypress(function (event) {
-      if (event.which == 32) {
-        console.log('space pressed!');
-        // Space
-        console.log('cardCount < cardList.length');
+    function setBoth() {
+      var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
+      $('#cardBack').text(cardBack);
+    }
+    function setFront() {
+      $('#cardBack').text('');
+      var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
+      $('#cardFront').text(cardFront);
+      $('#deckProgress').prop('aria-valuenow', cardCount + 1);
+      $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
+      $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+    }
+    $(document).keydown(function (event) {
+      const KEY_RIGHT = 39;
+      const KEY_LEFT = 37;
+      const KEY_UP = 38;
+      const KEY_DOWN = 40;
+
+      if (event.which === KEY_RIGHT || event.which === KEY_DOWN) {
         if ($('#cardFront').text() && !$('#cardBack').text()) {
-          var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
-          $('#cardBack').text(cardBack);
+          setBoth();
         } else if ($('#cardFront').text() && $('#cardBack').text()) {
           if (cardCount < cardList.length - 1) {
             cardCount++;
-            $('#cardBack').text('');
-            var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
-            $('#cardFront').text(cardFront);
-            $('#deckProgress').prop('aria-valuenow', cardCount + 1);
-            $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
-            $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+            setFront();
+          }
+        }
+      } else if (event.which === KEY_LEFT || event.which === KEY_UP) {
+        if ($('#cardFront').text() && !$('#cardBack').text()) {
+          setBoth();
+        } else if ($('#cardFront').text() && $('#cardBack').text()) {
+          if (cardCount > 0) {
+            cardCount--;
+            setFront();
           }
         }
       }

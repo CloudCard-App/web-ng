@@ -3,7 +3,8 @@
 <head>
   <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="/public/style.css">
@@ -17,19 +18,24 @@
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group" role="group">
       <a href="/teacher/dashboard" class="btn btn-default">Dashboard</a>
-      <a href="/teacher/class/class/?classID=<%= classInfo._id %>" class="btn btn-default"><%= classInfo.name %></a>
+      <a href="/teacher/class/class/?classID=<%= classInfo._id %>"
+         class="btn btn-default"><%= classInfo.name %></a>
     </div>
 
     <div class="btn-group pull-right" role="group">
       <a href="/logout" class="btn btn-warning">Logout</a>
     </div>
-  </div><br>
+  </div>
+  <br>
 
 
   <ul class="nav nav-tabs nav-justified">
-    <li role="presentation" class="active"><a data-toggle="tab" href="#edit">Cards</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#statistics">Statistics</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#preview">Preview</a></li>
+    <li role="presentation" class="active"><a data-toggle="tab" href="#edit">Cards</a>
+    </li>
+    <li role="presentation"><a data-toggle="tab"
+                               href="#statistics">Statistics</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#preview">Preview</a>
+    </li>
   </ul>
 
   <div class="tab-content">
@@ -61,28 +67,39 @@
             </td>
 
             <td>
-              <label><input id="textRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>" checked>
+              <label><input id="textRadio_<%= card._id %>" type="radio"
+                            name="optradio_<%= card._id %>" checked>
                 Text</label><br>
-              <label><input id="imageRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>"
-                        <%= (card.dataType == 'image') ? 'checked' : '' %> disabled> Image</label><br>
-              <label><input id="videoRadio_<%= card._id %>" type="radio" name="optradio_<%= card._id %>"
-                        <%= (card.dataType == 'video') ? 'checked' : '' %> disabled> Video</label><br>
+              <label><input id="imageRadio_<%= card._id %>" type="radio"
+                            name="optradio_<%= card._id %>"
+                        <%= (card.dataType == 'image') ? 'checked' : '' %>
+                            disabled> Image</label><br>
+              <label><input id="videoRadio_<%= card._id %>" type="radio"
+                            name="optradio_<%= card._id %>"
+                        <%= (card.dataType == 'video') ? 'checked' : '' %>
+                            disabled> Video</label><br>
             </td>
 
             <td>
               <form action="/teacher/card/deleteCard/" method="post">
                 <input type="hidden" name="cardID" value="<%= card._id %>">
                 <input type="hidden" name="deckID" value="<%= deckInfo._id %>">
-                <button type="submit" name="delete" class="btn btn-danger hidingButton">Delete</button>
+                <button type="submit" name="delete"
+                        class="btn btn-danger hidingButton">Delete
+                </button>
               </form>
               <br>
               <form action="/teacher/card/editCard/" method="post">
                 <input type="hidden" name="cardID" value="<%= card._id %>">
                 <input type="hidden" name="deckID" value="<%= deckInfo._id %>">
-                <input type="hidden" id="hiddenFrontInput_<%= card._id %>" name="front">
-                <input type="hidden" id="hiddenBackInput_<%= card._id %>" name="back">
-                <input type="hidden" id="hiddenDatatypeInput_<%= card._id %>" name="datatype" value=<%= card.datatype %>>
-                <button type="submit" id="saveButton_<%= card._id %>" name="save" class="btn btn-success hidingButton"
+                <input type="hidden" id="hiddenFrontInput_<%= card._id %>"
+                       name="front">
+                <input type="hidden" id="hiddenBackInput_<%= card._id %>"
+                       name="back">
+                <input type="hidden" id="hiddenDatatypeInput_<%= card._id %>"
+                       name="datatype" value=<%= card.datatype %>>
+                <button type="submit" id="saveButton_<%= card._id %>"
+                        name="save" class="btn btn-success hidingButton"
                         disabled>Save
                 </button>
               </form>
@@ -117,19 +134,25 @@
 
           <tr>
             <% console.log('ejs deckID = ' + deckInfo._id); %>
-            <form action="/teacher/card/create/?deckID=<%= deckInfo._id %>" method="post">
+            <form action="/teacher/card/create/?deckID=<%= deckInfo._id %>"
+                  method="post">
               <td>
-                <textarea class="form-control noHorizontalResize" name="front" rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="front"
+                          rows="3"></textarea>
               </td>
 
               <td>
-                <textarea class="form-control noHorizontalResize" name="back" rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="back"
+                          rows="3"></textarea>
               </td>
 
               <td>
-                <label><input type="radio" value="text" name="datatype" checked> Text</label> <br>
-                <label><input type="radio" value="image" name="datatype" disabled> Image</label> <br>
-                <label><input type="radio" value="video" name="datatype" disabled> Video</label> <br>
+                <label><input type="radio" value="text" name="datatype" checked>
+                  Text</label> <br>
+                <label><input type="radio" value="image" name="datatype"
+                              disabled> Image</label> <br>
+                <label><input type="radio" value="video" name="datatype"
+                              disabled> Video</label> <br>
               </td>
 
               <td>
@@ -159,23 +182,40 @@
         });
         <% }); %>
 
-        $(document).keypress(function (event) {
-          if (event.which == 32) {
-            console.log('space pressed!');
-            // Space
-            console.log('cardCount < cardList.length');
+        function setBoth() {
+          var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
+          $('#cardBack').text(cardBack);
+        }
+        function setFront() {
+          $('#cardBack').text('');
+          var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
+          $('#cardFront').text(cardFront);
+          $('#deckProgress').prop('aria-valuenow', cardCount + 1);
+          $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
+          $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+        }
+        $(document).keydown(function (event) {
+          const KEY_RIGHT = 39;
+          const KEY_LEFT = 37;
+          const KEY_UP = 38;
+          const KEY_DOWN = 40;
+
+          if (event.which === KEY_RIGHT || event.which === KEY_DOWN) {
             if ($('#cardFront').text() && !$('#cardBack').text()) {
-              var cardBack = $("<textarea/>").html(cardList[cardCount].back).text();
-              $('#cardBack').text(cardBack);
+              setBoth();
             } else if ($('#cardFront').text() && $('#cardBack').text()) {
               if (cardCount < cardList.length - 1) {
                 cardCount++;
-                $('#cardBack').text('');
-                var cardFront = $("<textarea/>").html(cardList[cardCount].front).text();
-                $('#cardFront').text(cardFront);
-                $('#deckProgress').prop('aria-valuenow', cardCount + 1);
-                $('#deckProgress').prop('style', 'width: ' + (cardCount + 1) / cardList.length * 100 + '%');
-                $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
+                setFront();
+              }
+            }
+          } else if (event.which === KEY_LEFT || event.which === KEY_UP) {
+            if ($('#cardFront').text() && !$('#cardBack').text()) {
+              setBoth();
+            } else if ($('#cardFront').text() && $('#cardBack').text()) {
+              if (cardCount > 0) {
+                cardCount--;
+                setFront();
               }
             }
           }
@@ -185,22 +225,28 @@
           $('#deckProgress').prop('aria-valuemax', cardList.length).prop('style', 'width: ' + 1 / cardList.length * 100 + '%');
           $('#deckProgress').text(cardCount + 1 + ' / ' + cardList.length);
         })
+
       </script>
 
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="progress panel-title">
-            <div id="deckProgress" class="progress-bar" role="progressbar"></div>
+            <div id="deckProgress" class="progress-bar"
+                 role="progressbar"></div>
           </div>
         </div>
 
         <div class="panel-body row">
           <div class="well col-md-5 paddedWell">
-            <h4><div id="cardFront"><%= cardList[0].front %></div></h4>
+            <h4>
+              <div id="cardFront"><%= cardList[0].front %></div>
+            </h4>
           </div>
 
           <div class="well col-md-5 paddedWell">
-            <h4><div id="cardBack"></div></h4>
+            <h4>
+              <div id="cardBack"></div>
+            </h4>
           </div>
         </div>
       </div>
