@@ -31,14 +31,11 @@
     </div>
   </div>
 
-  <% console.log('error = ' + error); %>
   <% if (error != null) { %>
   <div class="alert alert-danger alert-dismissible" role="alert"
-       id="schoolNotRegistered">
-    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="modal"
-       data-target="#infomodal"></i>
-    It seems like your school has not registered yet. <strong>Spread the
-      word!</strong>
+       id="schoolNotRegistered" data-toggle="modal" data-target="#infomodal">
+    <i class="fa fa-info-circle" aria-hidden="true"></i>
+    It seems like your school has not registered yet.
   </div>
 
   <div class="modal fade" id="infomodal" role="dialog">
@@ -55,10 +52,8 @@
         </div>
       </div>
     </div>
-
   </div>
   <% } %>
-
 </div>
 
 <footer class="footer">
