@@ -138,11 +138,17 @@
 
     <div class="row container">
       <div class="well col-md-5 paddedWell">
-        <h4><div id="cardFront"><%= cardList[0].front %></div></h4>
+        <% if (cardList.length != 0) { %>
+        <h4>
+          <div id="cardFront"><%= cardList[0].front %></div>
+        </h4>
+        <% } %>
       </div>
 
       <div class="well col-md-5 paddedWell">
-        <h4><div id="cardBack"></div></h4>
+        <h4>
+          <div id="cardBack"></div>
+        </h4>
       </div>
     </div>
   </div>
