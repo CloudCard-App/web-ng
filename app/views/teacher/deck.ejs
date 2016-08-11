@@ -238,9 +238,11 @@
 
         <div class="panel-body row">
           <div class="well col-md-5 paddedWell">
+            <% if (cardList.length != 0) { %>
             <h4>
               <div id="cardFront"><%= cardList[0].front %></div>
             </h4>
+            <% } %>
           </div>
 
           <div class="well col-md-5 paddedWell">
