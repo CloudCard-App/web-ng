@@ -10,7 +10,8 @@ let studentDeckRoutes = require('./routes/student/deck');
 
 module.exports = function (passport, app) {
   app.get('/', function (req, res) {
-    res.render('index');
+    console.log('req.query = ' + req.query.err);
+    res.render('index', {error: req.query.err});
   });
 
   app.get('/auth/google/teacher', passport.authenticate('teacher', {scope: ['profile', 'email']}));
@@ -24,12 +25,16 @@ module.exports = function (passport, app) {
 
   app.get('/auth/google/callback/teacher', passport.authenticate('teacher', {
     successRedirect: '/teacher/dashboard',
-    failureRedirect: '/'
+    failureRedirect: '/?err=schoolNotRegistered',
+    session: false,
+    failureFlash: true
   }));
 
   app.get('/auth/google/callback/student', passport.authenticate('student', {
     successRedirect: '/student/dashboard',
-    failureRedirect: '/'
+    failureRedirect: '/?err=schoolNotRegistered',
+    session: false,
+    failureFlash: true
   }));
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- TEACHER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -40,7 +45,7 @@ module.exports = function (passport, app) {
 
   app.get('/teacher/class/class/*', isLoggedIn, teacherClassRoutes.class);
 
-  app.post('/teacher/class/deleteClass', isLoggedIn, teacherClassRoutes.deleteClass)
+  app.post('/teacher/class/deleteClass', isLoggedIn, teacherClassRoutes.deleteClass);
 
   app.post('/teacher/deck/createDeck', isLoggedIn, teacherDeckRoutes.createDeck);
 

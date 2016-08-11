@@ -2,36 +2,80 @@
 <html>
 <head>
   <title>CloudCard</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <!-- load bootstrap css -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  <!-- load fontawesome -->
-  <link href="../public/style.css" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
+  <link rel="stylesheet" href="/public/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-<div>
-  <div class="col-sm-12 well">
-    <div class="jumbotron text-center">
-      <h1><span class="fa fa-cloud"></span> CloudCard </h1>
-      <h3>Log in or Register</h3>
-    </div>
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-4 well text-center">
-        <p>Teachers</p>
-        <a href="/auth/google/teacher" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-4 well text-center">
-        <p>Students</p>
-        <a href="/auth/google/student" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
-      </div>
-      <div class="col-md-1"/>
+<div class="container">
+  <br>
+  <div class="jumbotron">
+    <div class="container">
+      <h1><i class="fa fa-cloud" aria-hidden="true"></i> CloudCard</h1>
+      <p>The interactive learning tool for the connected classroom</p>
+      <br>
+      <% if (error == undefined) { %>
+      <a href="/auth/google/student" class="btn btn-primary btn-lg">Get
+        Started
+      </a>
+      <% } else { %>
+      <a href="/auth/google/student" class="btn btn-primary btn-lg disabled">Get
+        Started
+      </a>
+      <% } %>
     </div>
   </div>
+
+  <% console.log('error = ' + error); %>
+  <% if (error != null) { %>
+  <div class="alert alert-danger alert-dismissible" role="alert"
+       id="schoolNotRegistered">
+    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="modal"
+       data-target="#infomodal"></i>
+    It seems like your school has not registered yet. <strong>Spread the
+      word!</strong>
+  </div>
+
+  <div class="modal fade" id="infomodal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Did you use your school email?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Make sure to log in using the email provided by your school.</p>
+          <a href="/#" class="btn btn-default">Try again</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <% } %>
+
 </div>
-</div>
-</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted alignLeft">
+      <a href="https://github.com/cloudcard-app">
+        <i class="fa fa-github-alt" aria-hidden="true"></i>
+        Fork me on Github!
+      </a>
+    </p>
+    <p class="text-muted alignRight">
+      <a href="/auth/google/teacher">
+        Teacher Login
+      </a>
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>
