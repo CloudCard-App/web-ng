@@ -26,15 +26,11 @@ module.exports = function (passport, app) {
   app.get('/auth/google/callback/teacher', passport.authenticate('teacher', {
     successRedirect: '/teacher/dashboard',
     failureRedirect: '/?err=schoolNotRegistered',
-    session: false,
-    failureFlash: true
   }));
 
   app.get('/auth/google/callback/student', passport.authenticate('student', {
     successRedirect: '/student/dashboard',
     failureRedirect: '/?err=schoolNotRegistered',
-    session: false,
-    failureFlash: true
   }));
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- TEACHER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -79,9 +75,11 @@ module.exports = function (passport, app) {
 
 function isLoggedIn(req, res, next) {
   // TODO: if you're logged in you can access any of the other (teacher vs. student) paths as well
+  console.log('user = ' + req.user);
   if (req.isAuthenticated()) {
     return next();
   } else {
+    console.log('not authenticated: redirecting to home');
     res.redirect('/');
   }
 }

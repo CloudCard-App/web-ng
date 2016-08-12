@@ -7,7 +7,7 @@ module.exports = function (passport) {
   // used to serialize the user for the session
   passport.serializeUser(function (user, done) {
     console.log('serializing user: ' + user);
-    let userID = JSON.parse(user)._id;
+    let userID = user._id;
     done(null, userID); //Do whatever is next with the user.id
   });
 
@@ -16,7 +16,7 @@ module.exports = function (passport) {
     request(process.env.CORE_URL + '/student/info/?id=' + id, function (error, response, body) {
       if (!error && response.statusCode == 200 && body) {
         console.log('deserialized student: ' + body);
-        done(null, null);
+        done(null, JSON.parse(body));
       } else {
         request(process.env.CORE_URL + '/teacher/info/?id=' + id, function (error, response, body) {
           if (!error && response.statusCode == 200) {
@@ -50,7 +50,7 @@ module.exports = function (passport) {
             console.log('done with school not found');
             return done(null, false, body);
           } else {
-            return done(null, body);
+            return done(null, JSON.parse(body));
           }
         });
       });
@@ -78,7 +78,7 @@ module.exports = function (passport) {
           console.log('done with school not found');
           return done(null, false, body);
         } else {
-          return done(null, body);
+          return done(error, JSON.parse(body));
         }
       });
     });
