@@ -52,32 +52,44 @@
             <th></th>
           </tr>
 
-          <% console.log('EJS cardList = ' + JSON.stringify(cardList)); %>
           <% cardList.forEach(function(card) { %>
-          <% console.log('card._id ' + card._id); %>
           <tr>
+
+            <script>
+              $('#frontTextArea').bind('input propertychange', function () {
+                console.log('property changed!');
+              });
+            </script>
+
             <td>
-              <textarea class="form-control noHorizontalResize" rows="3"
+              <textarea class="form-control noHorizontalResize" id="frontTextArea" rows="3"
                         id="front_<%= card._id %>"><%= card.front %></textarea>
             </td>
 
             <td>
-              <textarea class="form-control noHorizontalResize" rows="3"
+              <textarea class="form-control noHorizontalResize" id="backTextArea" rows="3"
                         id="back_<%= card._id %>"><%= card.back %></textarea>
             </td>
 
             <td>
-              <label><input id="textRadio_<%= card._id %>" type="radio"
+              <label>
+                <input id="textRadio_<%= card._id %>" type="radio"
                             name="optradio_<%= card._id %>" checked>
-                Text</label><br>
-              <label><input id="imageRadio_<%= card._id %>" type="radio"
+                Text
+              </label><br>
+              <label>
+                <input id="imageRadio_<%= card._id %>" type="radio"
                             name="optradio_<%= card._id %>"
                         <%= (card.dataType == 'image') ? 'checked' : '' %>
-                            disabled> Image</label><br>
+                            disabled>
+                Image
+              </label><br>
               <label><input id="videoRadio_<%= card._id %>" type="radio"
                             name="optradio_<%= card._id %>"
                         <%= (card.dataType == 'video') ? 'checked' : '' %>
-                            disabled> Video</label><br>
+                            disabled>
+                Video
+              </label><br>
             </td>
 
             <td>
@@ -137,22 +149,25 @@
             <form action="/teacher/card/create/?deckID=<%= deckInfo._id %>"
                   method="post">
               <td>
-                <textarea class="form-control noHorizontalResize" name="front"
-                          rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="front" rows="3"></textarea>
               </td>
 
               <td>
-                <textarea class="form-control noHorizontalResize" name="back"
-                          rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="back" rows="3"></textarea>
               </td>
 
               <td>
-                <label><input type="radio" value="text" name="datatype" checked>
-                  Text</label> <br>
-                <label><input type="radio" value="image" name="datatype"
-                              disabled> Image</label> <br>
+                <label>
+                  <input type="radio" value="text" name="datatype" checked>
+                  Text
+                </label> <br>
+                <label>
+                  <input type="radio" value="image" name="datatype"
+                              disabled> Image
+                </label> <br>
                 <label><input type="radio" value="video" name="datatype"
-                              disabled> Video</label> <br>
+                              disabled> Video
+                </label> <br>
               </td>
 
               <td>
@@ -162,7 +177,6 @@
           </tr>
         </table>
       </div>
-
     </div>
 
     <div id="statistics" class="tab-pane fade">
