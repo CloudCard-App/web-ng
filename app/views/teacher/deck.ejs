@@ -54,42 +54,81 @@
 
           <% cardList.forEach(function(card) { %>
           <tr>
-
-            <script>
-              $('#frontTextArea').bind('input propertychange', function () {
-                console.log('property changed!');
-              });
-            </script>
-
             <td>
-              <textarea class="form-control noHorizontalResize" id="frontTextArea" rows="3"
+              <textarea class="form-control noHorizontalResize" rows="3"
                         id="front_<%= card._id %>"><%= card.front %></textarea>
+              <script>
+                $('#front_<%= card._id %>').on('input', function () {
+                  $.post('/teacher/card/editCard/', {
+                    front: $('#front_<%= card._id %>').val(),
+                    deckID: "<%= deckInfo._id %>",
+                    cardID: "<%= card._id %>"
+                  });
+                });
+              </script>
             </td>
 
             <td>
-              <textarea class="form-control noHorizontalResize" id="backTextArea" rows="3"
+              <textarea class="form-control noHorizontalResize" rows="3"
                         id="back_<%= card._id %>"><%= card.back %></textarea>
+              <script>
+                $('#back_<%= card._id %>').on('input', function () {
+                  $.post('/teacher/card/editCard/', {
+                    back: $('#back_<%= card._id %>').val(),
+                    deckID: "<%= deckInfo._id %>",
+                    cardID: "<%= card._id %>"
+                  });
+                });
+              </script>
+
             </td>
 
             <td>
               <label>
                 <input id="textRadio_<%= card._id %>" type="radio"
-                            name="optradio_<%= card._id %>" checked>
+                       name="optradio_<%= card._id %>" checked>
                 Text
               </label><br>
+              <script>
+                $('#textRadio_<%= card._id %>').on('input', function () {
+                  $.post('/teacher/card/editCard/', {
+                    datatype: 'text',
+                    deckID: "<%= deckInfo._id %>",
+                    cardID: "<%= card._id %>"
+                  });
+                });
+              </script>
               <label>
                 <input id="imageRadio_<%= card._id %>" type="radio"
-                            name="optradio_<%= card._id %>"
+                       name="optradio_<%= card._id %>"
                         <%= (card.dataType == 'image') ? 'checked' : '' %>
-                            disabled>
+                       disabled>
                 Image
               </label><br>
+              <script>
+                $('#textRadio_<%= card._id %>').on('input', function () {
+                  $.post('/teacher/card/editCard/', {
+                    datatype: 'image',
+                    deckID: "<%= deckInfo._id %>",
+                    cardID: "<%= card._id %>"
+                  });
+                });
+              </script>
               <label><input id="videoRadio_<%= card._id %>" type="radio"
                             name="optradio_<%= card._id %>"
                         <%= (card.dataType == 'video') ? 'checked' : '' %>
                             disabled>
                 Video
               </label><br>
+              <script>
+                $('#textRadio_<%= card._id %>').on('input', function () {
+                  $.post('/teacher/card/editCard/', {
+                    datatype: 'video',
+                    deckID: "<%= deckInfo._id %>",
+                    cardID: "<%= card._id %>"
+                  });
+                });
+              </script>
             </td>
 
             <td>
@@ -100,47 +139,7 @@
                         class="btn btn-danger hidingButton">Delete
                 </button>
               </form>
-              <br>
-              <form action="/teacher/card/editCard/" method="post">
-                <input type="hidden" name="cardID" value="<%= card._id %>">
-                <input type="hidden" name="deckID" value="<%= deckInfo._id %>">
-                <input type="hidden" id="hiddenFrontInput_<%= card._id %>"
-                       name="front">
-                <input type="hidden" id="hiddenBackInput_<%= card._id %>"
-                       name="back">
-                <input type="hidden" id="hiddenDatatypeInput_<%= card._id %>"
-                       name="datatype" value=<%= card.datatype %>>
-                <button type="submit" id="saveButton_<%= card._id %>"
-                        name="save" class="btn btn-success hidingButton"
-                        disabled>Save
-                </button>
-              </form>
             </td>
-
-            <!-- Please don't judge -->
-            <!-- Stupid stuff because you can't put a form into a table -->
-            <script>
-              $('#front_<%= card._id %>').change(function () {
-                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenFrontInput_<%= card._id %>').prop('value', $('#front_<%= card._id %>').val());
-              });
-              $('#back_<%= card._id %>').change(function () {
-                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenBackInput_<%= card._id %>').prop('value', $('#back_<%= card._id %>').val());
-              });
-              $('#textRadio_<%= card._id %>').change(function () {
-                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'text');
-              });
-              $('#imageRadio_<%= card._id %>').change(function () {
-                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'image');
-              });
-              $('#videoRadio_<%= card._id %>').change(function () {
-                $("#saveButton_<%= card._id %>").prop('disabled', false).removeClass('hidingButton');
-                $('#hiddenDatatypeInput_<%= card._id %>').prop('value', 'video');
-              });
-            </script>
           </tr>
           <% }); %>
 
@@ -149,11 +148,13 @@
             <form action="/teacher/card/create/?deckID=<%= deckInfo._id %>"
                   method="post">
               <td>
-                <textarea class="form-control noHorizontalResize" name="front" rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="front"
+                          rows="3"></textarea>
               </td>
 
               <td>
-                <textarea class="form-control noHorizontalResize" name="back" rows="3"></textarea>
+                <textarea class="form-control noHorizontalResize" name="back"
+                          rows="3"></textarea>
               </td>
 
               <td>
@@ -163,7 +164,7 @@
                 </label> <br>
                 <label>
                   <input type="radio" value="image" name="datatype"
-                              disabled> Image
+                         disabled> Image
                 </label> <br>
                 <label><input type="radio" value="video" name="datatype"
                               disabled> Video
