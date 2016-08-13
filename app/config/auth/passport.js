@@ -28,7 +28,6 @@ module.exports = function (passport) {
     });
   });
 
-
   passport.use('teacher', new GoogleStrategy({
       clientID: authConfig.teacher.clientID,
       clientSecret: authConfig.teacher.clientSecret,
@@ -83,6 +82,4 @@ module.exports = function (passport) {
       });
     });
   }));
-
 };
-
